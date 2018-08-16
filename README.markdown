@@ -1,8 +1,15 @@
-# fireplace.vim
+# A fork of tpope/vim-fireplace
 
 There's a REPL in fireplace, but you probably wouldn't have noticed if I hadn't
 told you.  Such is the way with fireplace.vim.  By the way, this plugin is for
 Clojure.
+
+## About this fork
+
+It's (currently) for small tweaks to remove, disable or change things that would never get merged into the main repository. So far I've done the following:
+
+ * Remove the automatic piggieback call when something requests a client. This prevents my autocomplete in a ClojureScript buffer trying to boot REPLs.
+ * Swap the default piggieback REPL environment from rhino to node.
 
 ## Installation
 
