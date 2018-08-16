@@ -307,8 +307,8 @@ function! s:repl.piggieback(arg, ...) abort
 
   let connection = s:conn_try(self.connection, 'clone')
   if empty(a:arg)
-    call connection.eval("(require 'cljs.repl.nashorn)")
-    let arg = '(cljs.repl.nashorn/repl-env)'
+    call connection.eval("(require 'cljs.repl.node)")
+    let arg = '(cljs.repl.node/repl-env)'
   elseif a:arg =~# '^\d\{1,5}$'
     let replns = 'weasel.repl.websocket'
     if has_key(connection.eval("(require '" . replns . ")"), 'ex')
@@ -704,20 +704,7 @@ endfunction
 
 function! fireplace#client(...) abort
   let buf = a:0 ? a:1 : s:buf()
-  let client = fireplace#platform(buf)
-  if fnamemodify(bufname(buf), ':e') ==# 'cljs'
-    if !has_key(client, 'connection')
-      throw 'Fireplace: no live REPL connection'
-    endif
-    if empty(client.piggiebacks)
-      let result = client.piggieback('')
-      if has_key(result, 'ex')
-        throw 'Fireplace: '.result.ex
-      endif
-    endif
-    return client.piggiebacks[0]
-  endif
-  return client
+  return fireplace#platform(buf)
 endfunction
 
 function! fireplace#message(payload, ...) abort
